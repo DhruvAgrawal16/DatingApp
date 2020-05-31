@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.ApI.Data;
 using DatingApp.ApI.Helpers;
 using dotnet_rpg.Data;
@@ -48,8 +49,14 @@ namespace DatingApp.ApI
                 };
             });
             services.AddScoped<IAuthRepository,AuthRepository>();
+            services.AddScoped<IDatingRepository,DatingRepository>();
+            services.AddAutoMapper(typeof(DatingRepository).Assembly);
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => 
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = 
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddDbContext<DataContext>(x=>x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
         }
 
