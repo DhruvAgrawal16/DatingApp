@@ -73,7 +73,7 @@ namespace dotnet_rpg.Data
                 {
                     if (ComputePasswordHash[i] != passwordHash[i])
                     {
-                        return false;
+                        return true;
                     }
                 }
                 return true;
