@@ -4,6 +4,7 @@ using System.Security;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.ApI.Dtos;
 using DatingApp.ApI.Models;
 using dotnet_rpg.Data;
@@ -19,8 +20,10 @@ namespace DatingApp.ApI.Controllers
     {
         private readonly IAuthRepository repo;
         private readonly IConfiguration config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
+            this.mapper = mapper;
             this.config = config;
             this.repo = repo;
 
@@ -57,7 +60,7 @@ namespace DatingApp.ApI.Controllers
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier,userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name,userFromRepo.Username),
+            new Claim(ClaimTypes.Name,userFromRepo.Username),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("AppSetting:Token").Value));
@@ -76,8 +79,10 @@ namespace DatingApp.ApI.Controllers
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
+        var userForListDto =  mapper.Map<UserForListDto>(userFromRepo);
         return Ok(new{
-            token = tokenHandler.WriteToken(token)
+            token = tokenHandler.WriteToken(token),
+            userForListDto
         }); 
         }
     }

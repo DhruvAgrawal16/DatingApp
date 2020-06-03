@@ -58,6 +58,7 @@ namespace DatingApp.ApI
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddDbContext<DataContext>(x=>x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
