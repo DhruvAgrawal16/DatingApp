@@ -31,6 +31,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { ListsComponent } from './lists/lists.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 
 export function tokenGetter() {
@@ -50,7 +52,8 @@ export function tokenGetter() {
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,
@@ -78,6 +81,7 @@ export function tokenGetter() {
       AuthService,
       MemberDetailResolver,
       MemberEditResolver,
+      MessagesResolver,
       AlertifyService,
       AuthGuard,
       UserService,
